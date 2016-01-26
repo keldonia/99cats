@@ -1,0 +1,18 @@
+<!DOCTYPE=html>
+<html>
+<title><%= @cat.name %></title>
+<body>
+  <h1><%= @cat.name %></h1>
+  <br>
+  <h2>Attributes</h2>
+  <ul>
+    <li>Sex: <%= @cat.sex %></li>
+    <li>Color: <%= @cat.color %></li>
+    <li>Age: <%= @cat.age %></li>
+    <li>Birthday: <%= @cat.birth_date %></li>
+  </ul>
+  <p><%= @cat.description %></p>
+
+  <%= button_to "Edit #{@cat.name}", edit_cat_url(@cat), method: :get %>
+</body>
+</html>

@@ -1,0 +1,15 @@
+<!DOCTYPE = html>
+<html>
+<title>
+  All the cats!
+</title>
+<body>
+  <h1>All the cats!</h1>
+  <br>
+  <% @cats.each do |cat| %>
+    <%= link_to cat.name, cat_url(cat) %>
+  <% end %>
+  <br>
+  <%= button_to "Add a New Cat", new_cat_url, method: :get %>
+</body>
+</html>
