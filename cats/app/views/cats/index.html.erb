@@ -7,7 +7,7 @@
   <h1>All the cats!</h1>
   <br>
   <% @cats.each do |cat| %>
-    <%= link_to cat.name, cat_url(cat) %>
+    <%= link_to cat.name, cat_url(cat) %><br>
   <% end %>
   <br>
   <%= button_to "Add a New Cat", new_cat_url, method: :get %>

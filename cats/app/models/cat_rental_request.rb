@@ -10,13 +10,13 @@ class CatRentalRequest < ActiveRecord::Base
 
   def approve!
     CatRentalRequest.transaction do
-      update(status: "APPROVED").save!
-      overlapping_pending_requests.update_all(status: "DENIED")
+      update!(status: "APPROVED")
+      overlapping_pending_requests.each(&:deny!)
     end
   end
 
   def deny!
-    update(status: "DENIED").save!
+    update!(status: "DENIED")
   end
 
   def pending?
@@ -35,11 +35,11 @@ class CatRentalRequest < ActiveRecord::Base
   end
 
   def overlapping_approved_requests
-    overlapping_requests.select { status == "APPROVED" }
+    overlapping_requests.where(status: "APPROVED")
   end
 
   def overlapping_pending_requests
-    overlapping_requests.select { status == "PENDING" }
+    overlapping_requests.where(status: "PENDING")
   end
 
   def conflicting_request
