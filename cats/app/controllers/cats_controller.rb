@@ -11,13 +11,17 @@ class CatsController < ApplicationController
   end
 
   def new
+    @cat = Cat.new
     render :new
   end
 
   def create
     @cat = Cat.new(cat_params)
-    @cat.save!
-    redirect_to cat_url(@cat.id)
+    if @cat.save
+      redirect_to cat_url(@cat.id)
+    else
+      render :new
+    end
   end
 
   def update
@@ -30,7 +34,7 @@ class CatsController < ApplicationController
   end
 
   def edit
-    @cat = Cat.find_by(id: params[:id])
+    @cat = Cat.find_by_id(params[:id])
     render :edit
   end
 

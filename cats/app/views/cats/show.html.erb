@@ -14,5 +14,11 @@
   <p><%= @cat.description %></p>
 
   <%= button_to "Edit #{@cat.name}", edit_cat_url(@cat), method: :get %>
+
+  <br>
+  <h2>Existing Requests</h2>
+  <% @cat.cat_rental_requests.order(:start_date).each do |request| %>
+    <p><%= request.start_date %> - <%= request.end_date %></p>
+  <% end %>
 </body>
 </html>

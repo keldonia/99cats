@@ -14,6 +14,8 @@ class Cat < ActiveRecord::Base
   validates :birth_date, presence: true
   validates :name, presence: true
 
+  has_many :cat_rental_requests, dependent: :destroy
+
   def age
     ((Time.new.to_date - birth_date) / 365).to_i
   end
