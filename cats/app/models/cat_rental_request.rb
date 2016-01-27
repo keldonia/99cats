@@ -8,6 +8,21 @@ class CatRentalRequest < ActiveRecord::Base
 
   belongs_to :cat
 
+  def approve!
+    CatRentalRequest.transaction do
+      update(status: "APPROVED").save!
+      overlapping_pending_requests.update_all(status: "DENIED")
+    end
+  end
+
+  def deny!
+    update(status: "DENIED").save!
+  end
+
+  def pending?
+    status == "PENDING"
+  end
+
   def temporally_possible
     if (end_date - start_date).to_i < 0
       errors.add(:temporal, "You are not a time traveler")
@@ -21,6 +36,10 @@ class CatRentalRequest < ActiveRecord::Base
 
   def overlapping_approved_requests
     overlapping_requests.select { status == "APPROVED" }
+  end
+
+  def overlapping_pending_requests
+    overlapping_requests.select { status == "PENDING" }
   end
 
   def conflicting_request
